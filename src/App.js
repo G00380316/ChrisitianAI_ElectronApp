@@ -22,6 +22,10 @@ function App() {
         const agentMessage = { type: 'agent', text: response};
         setMessages([...messages, userMessage, agentMessage]);
     };
+
+   /* const handleButtonPress = async() => {
+    
+    }*/
     
     useEffect(() => {
         scroll.current?.scrollIntoView({ behaviour: "smooth" })
@@ -36,7 +40,7 @@ function App() {
                         <span className="title" >RabbiGpt</span>
                     </Stack>
                     <button className="button">
-                        Clear
+                        Forget
                     </button>
                 </Grid>
             </div>
