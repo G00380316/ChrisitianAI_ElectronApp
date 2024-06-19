@@ -5,6 +5,7 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      overflow: hidden !important; 
     }
     
     .date {
@@ -23,7 +24,7 @@
     }
 
     .messages {
-        height: calc(100vh - 13.8rem);
+        height: calc(100vh - 9.8rem);
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -135,7 +136,6 @@
 
     .chat_input {
         display: flex;
-        width: 100%;
         background: transparent;
         padding: 1rem;
     }
