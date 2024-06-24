@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const { handleQuestion } = require('./aiHandler');
+const { deleteHistory, createChatroom  } = require('./userHandler'); 
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -36,3 +37,12 @@ ipcMain.handle('ask-question', async (event, input) => {
     return response;
 });
 
+ipcMain.handle('forget-chat', async (event) => {
+    const response = await deleteHistory();
+    return response;
+});
+
+ipcMain.handle('create-chat', async (event, input) => {
+    const response = await createChatroom(input);
+    return response;
+})

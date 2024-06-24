@@ -9,6 +9,9 @@ const { MongoClient } = require('mongodb');
 const { connectMongoDB } = require('./mongo.js');
 const { searchVectorStore } = require('./searchVectorMongoDB.js');
 const ChatHistory = require('./llmHistory.js');
+const { createChatroom } = require('./userHandler.js');
+const { LocalStorage } = require('node-localstorage');
+const localStorage = new LocalStorage('./scratch');
 
 dotenv.config();
 
@@ -33,9 +36,18 @@ const searchTool = new TavilySearchResults();
 
 async function handleQuestion(input) {
     await connectMongoDB();
-    const aichatroom = process.env.AI_TEST_CHATROOM;
-    const chatHistory = await ChatHistory.findOne({ aichatroom });
-    const storeChatHistory = [];
+    //const aichatroom = process.env.AI_TEST_CHATROOM;
+    if (!localStorage.getItem("aichatroomID")){
+        const response = createChatroom(input);
+        return response;
+    }
+    if (!localStorage.getItem("userID")){
+        localStorage.clear();
+        return "No User , Say something to create an account!";
+    }
+    const aichatroom = localStorage.getItem("aichatroomID");
+    const chatHistory = await ChatHistory.findOne({ aichatroom });  
+    const storeChatHistory = []; 
 
     if (chatHistory) {
         chatHistory.messages.forEach((message, index) => {
