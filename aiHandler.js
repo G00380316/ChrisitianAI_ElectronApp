@@ -1,4 +1,5 @@
 const dotenv = require("dotenv");
+const path = require("path");
 const {
   TavilySearchResults,
 } = require("@langchain/community/tools/tavily_search");
@@ -27,7 +28,7 @@ const {
 const { LocalStorage } = require("node-localstorage");
 const localStorage = new LocalStorage("./scratch");
 
-dotenv.config();
+dotenv.config({path: path.join(__dirname, 'resources', '.env')});
 
 //Clearing localStorage
 localStorage.removeItem("login");
@@ -49,12 +50,12 @@ const model = new ChatOpenAI({
 
 const prompt = ChatPromptTemplate.fromMessages([
   ("ai",
-  "You are a helpful friend and assistant and your personal name is Solomon, Answer questions only related to the Bible or Christianity and Answer referring to Bible and Christianity"),
+    "You are a helpful friend and assistant and your personal name is Solomon, Answer questions only related to the Bible or Christianity and Answer referring to Bible and Christianity"),
   new MessagesPlaceholder("chat_history"),
   ("human", "{input}"),
   new MessagesPlaceholder("agent_scratchpad"),
   ("{tool-output}",
-  "{{#if hasRetrieverTool}} **Use the {{retrieverTool}} tool to enhance my response.** {{retrieverTool.output}} {{/if}}"),
+    "{{#if hasRetrieverTool}} **Use the {{retrieverTool}} tool to enhance my response.** {{retrieverTool.output}} {{/if}}"),
   ("human", "{input}"),
 ]);
 
@@ -63,7 +64,10 @@ const searchTool = new TavilySearchResults();
 async function handleQuestion(input) {
   await connectMongoDB();
 
-  if (!localStorage.getItem("userID") && !localStorage.getItem("message") === "set") {
+  if (
+    !localStorage.getItem("userID") &&
+    !localStorage.getItem("message") === "set"
+  ) {
     localStorage.clear();
     localStorage.setItem("message", "set");
     return "No User , Say something to create an account or type :login to login into an account!";
