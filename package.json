@@ -1,15 +1,32 @@
 {
-  "name": "solomonai",
+  "name": "MySolomanAI",
   "version": "1.0.0",
-  "description": "",
+  "description": "Christian AI with more Powerful than ChatGPT 3.5 and an Expert on Christianity and the Bible",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "package-win": "electron-packager . MySolomonAI --platform=win32 --arch=x64 --out=dist --overwrite --icon=assets/favicon.ico --extra-resource=dotenv",
     "dev": "npx webpack --mode development && npx electron .",
-    "start": "npx electron ."
+    "start": "npx electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.enocha.mysolomonai",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/favicon.ico"
+    },
+    "extraResources": [
+      {
+        "from": "./.env",
+        "to": ".env",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
   },
   "keywords": [],
-  "author": "",
+  "author": "Enoch Abiodun",
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -22,7 +39,6 @@
     "@mui/lab": "^5.0.0-alpha.170",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
-    "electron": "^31.0.1",
     "langchain": "^0.2.5",
     "moment": "^2.30.1",
     "mongodb": "^6.7.0",
@@ -39,6 +55,7 @@
     "@babel/preset-react": "^7.24.7",
     "babel-loader": "^9.1.3",
     "css-loader": "^7.1.2",
+    "electron": "^31.0.1",
     "style-loader": "^4.0.0",
     "webpack": "^5.92.0",
     "webpack-cli": "^5.1.4",

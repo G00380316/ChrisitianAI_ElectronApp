@@ -19,7 +19,11 @@ const { searchVectorStore } = require("./searchVectorMongoDB.js");
 const ChatHistory = require("./llmHistory.js");
 const AIChatroom = require("./aichatroom.js");
 const User = require("./user.js");
-const { createChatroom, findChatroom, returnUserDetails } = require("./userHandler.js");
+const {
+  createChatroom,
+  findChatroom,
+  returnUserDetails,
+} = require("./userHandler.js");
 const { LocalStorage } = require("node-localstorage");
 const localStorage = new LocalStorage("./scratch");
 
@@ -59,37 +63,38 @@ const searchTool = new TavilySearchResults();
 async function handleQuestion(input) {
   await connectMongoDB();
 
-  if (!localStorage.getItem("userID") && !localStorage.getItem("message")) {
+  if (!localStorage.getItem("userID") && !localStorage.getItem("message") === "set") {
     localStorage.clear();
     localStorage.setItem("message", "set");
     return "No User , Say something to create an account or type :login to login into an account!";
   }
   if (localStorage.getItem("userID") && !localStorage.getItem("aichatroomID")) {
-
     const aichatroom = await AIChatroom.findOne({
       participants: [localStorage.getItem("userID"), process.env.AI_ID],
     });
 
-    if(aichatroom){
-      localStorage.setItem("aichatroomID", aichatroom._id)
+    if (aichatroom) {
+      localStorage.setItem("aichatroomID", aichatroom._id);
     }
 
-    if(!aichatroom){
+    if (!aichatroom) {
       const newChatroom = await AIChatroom.create({
         participants: [localStorage.getItem("userID"), process.env.AI_ID],
       });
     }
-    
   }
   if (localStorage.getItem("login") || input === ":login") {
     const response = findChatroom(input);
     return response;
   }
-  if (!localStorage.getItem("aichatroomID") && !localStorage.getItem("userID")) {
+  if (
+    !localStorage.getItem("aichatroomID") &&
+    !localStorage.getItem("userID")
+  ) {
     const response = createChatroom(input);
     return response;
   }
-  if(input === ":details"){
+  if (input === ":details") {
     const response = returnUserDetails();
     return response;
   }
