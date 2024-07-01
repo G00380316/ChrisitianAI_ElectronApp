@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Checkbox, Grid, Stack, Typography } from "@mui/joy";
-import { LoadingButton } from "@mui/lab";
-import moment from "moment";
+import { Divider, Grid, Stack, Typography } from "@mui/joy";
 import InputEmojiWithRef from "react-input-emoji";
 import "./index.css";
 
@@ -45,13 +43,15 @@ function App() {
           <Stack>
             <span className="title">RabbiGpt</span>
           </Stack>
-          <button className="button" onClick={handleButtonPress}>Forget</button>
+          <button className="button" onClick={handleButtonPress}>
+            Forget
+          </button>
         </Grid>
       </div>
       <div className="chat_messages">
         <div className="messages_box">
           <div className="messages">
-            {messages &&
+            {messages && messages.length > 0 ? (
               messages.map((message, index) => (
                 <div
                   key={index}
@@ -63,11 +63,18 @@ function App() {
                   <span className={message?.type === "user" ? "" : "letter"}>
                     {message.text}
                   </span>
-                  <span className="date">
-                    {moment(message.createdAt).calendar()}
-                  </span>
                 </div>
-              ))}
+              ))
+            ) : (
+              <Grid justifyContent={"center"}>
+                <Typography fontStyle={"italic"} fontWeight={"900"}>
+                  Commands for Users
+                </Typography>
+                <Divider />
+                <Typography>:details for User Details</Typography>
+                <Typography>:login to Log in as a different User</Typography>
+              </Grid>
+            )}
           </div>
         </div>
       </div>
