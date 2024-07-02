@@ -26,7 +26,7 @@ const {
   returnUserDetails,
 } = require("./userHandler.js");
 const { LocalStorage } = require("node-localstorage");
-const localStorage = new LocalStorage("./scratch");
+const localStorage = new LocalStorage("");
 
 dotenv.config({path: path.join(__dirname, 'resources', 'env')});
 

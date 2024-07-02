@@ -6,7 +6,7 @@ const User = require("./user.js");
 const AIChatroom = require("./aichatroom.js");
 const bcrypt = require("bcryptjs");
 const { LocalStorage } = require("node-localstorage");
-const localStorage = new LocalStorage("./scratch");
+const localStorage = new LocalStorage("");
 
 dotenv.config({path: path.join(__dirname, 'resources', 'env')});
 
