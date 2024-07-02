@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const { LocalStorage } = require("node-localstorage");
 const localStorage = new LocalStorage("./scratch");
 
-dotenv.config({path: path.join(__dirname, 'resources', '.env')});
+dotenv.config({path: path.join(__dirname, 'resources', 'env')});
 
 async function deleteHistory() {
   try {
