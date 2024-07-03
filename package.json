@@ -17,7 +17,7 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/favicon.icns"
+      "icon": "assets/icon.icns"
     },
     "linux": {
       "target": "AppImage",
