@@ -17,7 +17,7 @@
     },
     "mac": {
       "target": "dmg",
-      "icon": "assets/favicon.ico"
+      "icon": "assets/favicon.icns"
     },
     "linux": {
       "target": "AppImage",
@@ -32,12 +32,12 @@
       "main.js",
       "index.html",
       "preload.js",
-      ".env"
+      "env"
     ],
     "extraResources": [
       {
-        "from": "resources/.env",
-        "to": ".env"
+        "from": "resources/env",
+        "to": "resources/env"
       }
     ]
   },
